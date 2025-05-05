@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Testimonials - Garden Gals{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="mb-4">What Our Clients Say</h1>
+                <p class="lead">Read testimonials from our satisfied customers.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            {% for testimonial in testimonials %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= testimonial.rating %}
+                                <span class="text-warning">★</span>
+                                {% else %}
+                                <span class="text-muted">★</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="card-text testimonial-quote">"{{ testimonial.quote }}"</p>
+                        <div class="d-flex align-items-center mt-3">
+                            {% if testimonial.photo %}
+                            <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.first_name }}" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                            {% endif %}
+                            <div>
+                                <p class="mb-0 fw-bold">{{ testimonial.first_name }}</p>
+                                {% if testimonial.service %}
+                                <p class="text-muted mb-0 small">{{ testimonial.service.name }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Testimonials will be added soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Ready to Experience Our Services?</h2>
+        <p class="lead mb-4">Join our satisfied customers and transform your garden today.</p>
+        <a href="{% url 'appointment' %}" class="btn btn-lg btn-success">Book an Appointment</a>
+    </div>
+</section>
+{% endblock %} 

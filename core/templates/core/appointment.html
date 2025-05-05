@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Book a Call - Garden Gals{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="mb-4">BOOK A CALL</h1>
+                <p class="lead">Fill out the form below to schedule a call with Garden Gals.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        <form method="post">
+                            {% csrf_token %}
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-4 mb-md-0">
+                                    <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+                                    <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" class="form-control" {% if form.name.value %}value="{{ form.name.value }}"{% endif %}>
+                                    {% if form.name.errors %}
+                                    <div class="text-danger mt-1">{{ form.name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="{{ form.phone.id_for_label }}" class="form-label">Phone</label>
+                                    <input type="tel" name="{{ form.phone.name }}" id="{{ form.phone.id_for_label }}" class="form-control" {% if form.phone.value %}value="{{ form.phone.value }}"{% endif %}>
+                                    {% if form.phone.errors %}
+                                    <div class="text-danger mt-1">{{ form.phone.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                                <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" class="form-control" {% if form.email.value %}value="{{ form.email.value }}"{% endif %}>
+                                {% if form.email.errors %}
+                                <div class="text-danger mt-1">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                                <input type="text" name="{{ form.address.name }}" id="{{ form.address.id_for_label }}" class="form-control" {% if form.address.value %}value="{{ form.address.value }}"{% endif %}>
+                                {% if form.address.errors %}
+                                <div class="text-danger mt-1">{{ form.address.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="callback_time" class="form-label">Preferred Callback Time</label>
+                                <select name="callback_time" id="callback_time" class="form-select">
+                                    <option value="morning">Morning (9am - 12pm)</option>
+                                    <option value="afternoon">Afternoon (12pm - 5pm)</option>
+                                    <option value="evening">Evening (5pm - 8pm)</option>
+                                    <option value="anytime">Anytime</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="{{ form.notes.id_for_label }}" class="form-label">Additional Notes</label>
+                                <textarea name="{{ form.notes.name }}" id="{{ form.notes.id_for_label }}" class="form-control" rows="4">{% if form.notes.value %}{{ form.notes.value }}{% endif %}</textarea>
+                                {% if form.notes.errors %}
+                                <div class="text-danger mt-1">{{ form.notes.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success btn-lg">Book Call</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

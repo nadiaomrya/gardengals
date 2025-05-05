@@ -1,0 +1,141 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=Dancing+Script:wght@400;700&display=swap');
+
+:root {
+  --primary: #4CAF50;      /* Garden green */
+  --primary-dark: #388E3C; /* Darker green */
+  --primary-light: #A5D6A7; /* Lighter green */
+  --accent: #FFC107;       /* Sunny yellow */
+  --text-dark: #2E3B2F;    /* Dark forest green for text */
+  --text-light: #F9FFF9;   /* Off-white for text on dark backgrounds */
+  --background-light: #F8F9FA; /* Light background */
+  --background-dark: #344E41; /* Dark green background */
+  
+  /* Fonts */
+  --font-heading: 'Lora', serif;
+  --font-body: 'Montserrat', sans-serif;
+  --font-special: 'Dancing Script', cursive;
+}
+
+/* Override Bootstrap colors */
+.btn-success {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-success:hover, .btn-success:focus {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-outline-success {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-outline-success:hover, .btn-outline-success:focus {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.text-success {
+  color: var(--primary) !important;
+}
+
+/* Typography */
+body {
+  color: var(--text-dark);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+/* Special text elements */
+blockquote {
+  font-family: var(--font-special);
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: var(--primary-dark);
+  border-left: 4px solid var(--primary-light);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+}
+
+.testimonial-quote {
+  font-family: var(--font-special);
+  font-size: 1.2rem;
+}
+
+/* Header & Navigation */
+header {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: var(--text-dark);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: var(--primary);
+}
+
+/* Cards */
+.card {
+  border: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Hero section */
+.hero {
+  background-color: var(--background-light);
+  padding: 5rem 0;
+}
+
+/* Footer */
+footer {
+  background-color: var(--background-dark);
+  color: var(--text-light);
+}
+
+footer a {
+  color: var(--text-light);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Blog */
+.blog-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Testimonials */
+.text-warning {
+  color: var(--accent) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero {
+    padding: 3rem 0;
+  }
+  
+  h1.display-4 {
+    font-size: 2.5rem;
+  }
+} 

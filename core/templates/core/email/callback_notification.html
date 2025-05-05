@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>New Callback Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>New Callback Request</h1>
+        </div>
+        <div class="content">
+            <p>You have received a new callback request from the Garden Gals of Georgia website.</p>
+            
+            <table>
+                <tr>
+                    <th>Name:</th>
+                    <td>{{ appointment.name }}</td>
+                </tr>
+                <tr>
+                    <th>Phone:</th>
+                    <td>{{ appointment.phone }}</td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td>{{ appointment.email }}</td>
+                </tr>
+                <tr>
+                    <th>Address:</th>
+                    <td>{{ appointment.address }}</td>
+                </tr>
+                <tr>
+                    <th>Preferred Callback Time:</th>
+                    <td>{{ appointment.get_callback_time_display }}</td>
+                </tr>
+                {% if appointment.notes %}
+                <tr>
+                    <th>Additional Notes:</th>
+                    <td>{{ appointment.notes }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>Submitted On:</th>
+                    <td>{{ appointment.created_at|date:"F j, Y, g:i a" }}</td>
+                </tr>
+            </table>
+            
+            <p>Please contact this customer at your earliest convenience.</p>
+        </div>
+        <div class="footer">
+            <p>This is an automated message from your Garden Gals of Georgia website.</p>
+        </div>
+    </div>
+</body>
+</html> 

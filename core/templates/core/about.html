@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}About Garden Gals{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="mb-4">ABOUT GARDEN GALS OF GEORGIA</h1>
+                <p class="lead">We're passionate about creating beautiful, sustainable gardens.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2>OUR STORY</h2>
+                <p>Garden Gals of Georgia was officially founded in 2025 by expert gardeners inspired by a spirit of service to our community.</p>
+                <p>We love our clients as much as we love our work, and we believe in the power of nature to transform lives and nourish spirits.</p>
+                <p>Our mission is to create beautiful, sustainable outdoor spaces that bring joy and tranquility to our clients' lives.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="https://via.placeholder.com/600x400" alt="Garden Gals Team" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Team</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Team Member">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Bailey Price</h3>
+                        <p class="text-muted">Founder & Lead Gardener</p>
+                        <p class="card-text">Bailey has over 20 years of experience in landscape design and gardening. Her extensive knowledge of both plants and people makes her the heart of Garden Gals of Georgia.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Team Member">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Nadia Chekiri</h3>
+                        <p class="text-muted">Plant Specialist</p>
+                        <p class="card-text">Nadia has been growing and propagating plants for over 20 years. She has leveraged an insatiable curiosity into considerable knowledge of both native and exotic plants.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Team Member">
+                    <div class="card-body text-center">
+                        <h3 class="card-title"></h3>
+                        <p class="text-muted">Landscape Designer</p>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Clients Say</h2>
+        <div class="row">
+            {% for testimonial in testimonials %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= testimonial.rating %}
+                                <span class="text-warning">★</span>
+                                {% else %}
+                                <span class="text-muted">★</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="card-text">"{{ testimonial.quote }}"</p>
+                        <p class="card-text text-end">- {{ testimonial.first_name }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Testimonials will be added soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %} 
