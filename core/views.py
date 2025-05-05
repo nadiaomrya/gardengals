@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
-from .models import Service, Testimonial
-from .forms import AppointmentForm
+from django.contrib import messages
+from .models import Service, Testimonial, ReviewInvitation
+from .forms import AppointmentForm, TestimonialForm
 
 def landing(request):
     services = Service.objects.all()[:3]
@@ -23,7 +24,7 @@ def services(request):
     return render(request, 'core/services.html', {'services': services})
 
 def testimonials(request):
-    testimonials = Testimonial.objects.all()
+    testimonials = Testimonial.objects.filter(approved=True).order_by('-date')
     return render(request, 'core/testimonials.html', {'testimonials': testimonials})
 
 def appointment(request):
@@ -73,3 +74,32 @@ def appointment(request):
 
 def privacy(request):
     return render(request, 'core/privacy.html')
+
+def add_testimonial(request, token):
+    invitation = get_object_or_404(ReviewInvitation, token=token)
+    
+    if not invitation.is_valid:
+        messages.error(request, "This invitation link has expired or already been used.")
+        return redirect('landing')
+    
+    if request.method == 'POST':
+        form = TestimonialForm(request.POST)
+        if form.is_valid():
+            testimonial = form.save(commit=False)
+            testimonial.name = invitation.name
+            testimonial.save()
+            
+            # Mark invitation as used
+            invitation.used = True
+            invitation.save()
+            
+            messages.success(request, "Thank you for your review! It will be displayed on our site after approval.")
+            return redirect('landing')
+    else:
+        # Pre-fill the name from the invitation
+        form = TestimonialForm(initial={'name': invitation.name})
+    
+    return render(request, 'core/add_testimonial.html', {
+        'form': form,
+        'invitation': invitation
+    })

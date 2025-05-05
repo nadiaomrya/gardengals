@@ -1,0 +1,14 @@
+{
+    "include": [
+        "gardengals",
+        "core",
+        "blog"
+    ],
+    "extraPaths": [
+        "."
+    ],
+    "reportMissingImports": false,
+    "reportMissingModuleSource": false,
+    "pythonVersion": "3.12",
+    "typeCheckingMode": "basic"
+} 

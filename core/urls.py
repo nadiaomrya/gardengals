@@ -8,4 +8,5 @@ urlpatterns = [
     path('testimonials/', views.testimonials, name='testimonials'),
     path('appointment/', views.appointment, name='appointment'),
     path('privacy/', views.privacy, name='privacy'),
+    path('testimonials/add/<uuid:token>/', views.add_testimonial, name='add_testimonial'),
 ] 

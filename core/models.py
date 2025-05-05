@@ -1,4 +1,7 @@
 from django.db import models
+import uuid
+from django.utils import timezone
+from datetime import timedelta
 
 # Create your models here.
 
@@ -11,14 +14,14 @@ class Service(models.Model):
         return self.name
 
 class Testimonial(models.Model):
-    first_name = models.CharField(max_length=30)
-    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True)
-    quote = models.TextField()
-    rating = models.PositiveSmallIntegerField(default=5, choices=[(i, f"{i} Stars") for i in range(1, 6)])
-    photo = models.ImageField(upload_to='testimonials/', blank=True, null=True)
-
+    name = models.CharField(max_length=100)
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+    text = models.TextField()
+    date = models.DateField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+    
     def __str__(self):
-        return f"{self.first_name} - {self.service}"
+        return f"{self.name} - {self.rating} stars"
 
 class Appointment(models.Model):
     CALLBACK_CHOICES = [
@@ -38,3 +41,24 @@ class Appointment(models.Model):
     
     def __str__(self):
         return f"{self.name} - {self.created_at.strftime('%Y-%m-%d')}"
+
+class ReviewInvitation(models.Model):
+    email = models.EmailField()
+    name = models.CharField(max_length=100)
+    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    used = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"Invitation for {self.name} ({self.email})"
+    
+    def save(self, *args, **kwargs):
+        if not self.expires_at:
+            # Set expiration to 30 days from creation by default
+            self.expires_at = timezone.now() + timedelta(days=30)
+        super().save(*args, **kwargs)
+    
+    @property
+    def is_valid(self):
+        return not self.used and self.expires_at > timezone.now()

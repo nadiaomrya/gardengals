@@ -17,7 +17,9 @@
                 {% endif %}
                 
                 <div class="blog-content">
-                    {{ post.content|linebreaks }}
+                    {% autoescape off %}
+                        {{ post.content }}
+                    {% endautoescape %}
                 </div>
                 
                 <div class="mt-5 pt-4 border-top">

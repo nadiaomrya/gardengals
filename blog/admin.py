@@ -1,7 +1,10 @@
 from django.contrib import admin
-from .models import BlogPost
+from .models import Post
 
-@admin.register(BlogPost)
-class BlogPostAdmin(admin.ModelAdmin):
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'published_at', 'is_published')
+    list_filter = ('is_published', 'created_at')
+    search_fields = ('title', 'content')
     prepopulated_fields = {'slug': ('title',)}
-    list_display = ('title', 'author', 'created_at')
+    date_hierarchy = 'published_at'

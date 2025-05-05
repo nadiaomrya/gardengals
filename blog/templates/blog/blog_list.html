@@ -29,9 +29,13 @@
                             <small>By {{ post.author }} | {{ post.created_at|date:"F j, Y" }}</small>
                         </p>
                         {% if post.excerpt %}
-                        <p class="card-text">{{ post.excerpt }}</p>
+                        <div class="card-text">
+                            {{ post.excerpt|safe }}
+                        </div>
                         {% else %}
-                        <p class="card-text">{{ post.content|truncatewords:50 }}</p>
+                        <div class="card-text">
+                            {{ post.content|truncatewords:50|safe }}
+                        </div>
                         {% endif %}
                         <a href="{% url 'blog_detail' post.slug %}" class="btn btn-outline-success">Read More</a>
                     </div>
