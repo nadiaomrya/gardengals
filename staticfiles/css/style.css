@@ -2,13 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=Dancing+Script:wght@400;700&display=swap');
 
 :root {
-  --primary: #4CAF50;      /* Garden green */
-  --primary-dark: #388E3C; /* Darker green */
-  --primary-light: #A5D6A7; /* Lighter green */
+  --primary: #739886;      /* Garden green */
+  --primary-dark: #3b7e5e; /* Darker green */
+  --primary-light: #93e0bb; /* Lighter green */
   --accent: #FFC107;       /* Sunny yellow */
   --text-dark: #2E3B2F;    /* Dark forest green for text */
-  --text-light: #F9FFF9;   /* Off-white for text on dark backgrounds */
-  --background-light: #F8F9FA; /* Light background */
+  --text-light: #fef5bd;   /* Off-white for text on dark backgrounds */
+  --background-light: #d0dfbd; /* Light background */
   --background-dark: #344E41; /* Dark green background */
   
   /* Fonts */
