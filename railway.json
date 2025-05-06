@@ -5,7 +5,7 @@
   },
   "deploy": {
     "startCommand": "gunicorn gardengals.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --threads 2 --timeout 60 --log-file -",
-    "releaseCommand": "echo '--- railway.json: MINIMAL RELEASE COMMAND EXECUTED (Procfile deleted) ---'",
+    "releaseCommand": "echo '--- railway.json: Starting full release command ---' && python manage.py migrate --noinput && echo '--- railway.json: Migrations complete ---' && python manage.py collectstatic --noinput --clear && echo '--- railway.json: Collectstatic complete ---'",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
