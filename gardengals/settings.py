@@ -85,29 +85,40 @@ WSGI_APPLICATION = 'gardengals.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Use DATABASE_URL if available, otherwise fall back to individual settings
-if 'DATABASE_URL' in os.environ:
-    DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600)
-    }
-elif os.environ.get('DB_ENGINE', '') == 'sqlite':
+DATABASE_URL = os.environ.get('DATABASE_URL')
+DB_ENGINE_LOCAL = os.environ.get('DB_ENGINE')
+
+if DATABASE_URL:
+    # Production or environment with DATABASE_URL set
+    # Provide a default that will clearly fail if DATABASE_URL is missing but expected
+    DATABASES = {'default': dj_database_url.config(default='postgres://user:pass@host:1234/db_not_set', conn_max_age=600)}
+    print("INFO: Using DATABASE_URL for database configuration.") # Add print statement
+elif DB_ENGINE_LOCAL == 'sqlite':
+    # Local development explicitly using SQLite via .env
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+    print("INFO: Using SQLite for database configuration.") # Add print statement
 else:
+    # Fallback to local PostgreSQL settings (SHOULD NOT BE REACHED ON RAILWAY)
+    print("WARNING: Falling back to local PostgreSQL settings. DATABASE_URL not found and DB_ENGINE is not 'sqlite'.") # Add print statement
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.environ.get('DB_NAME', 'gardengals'),
-            'USER': os.environ.get('DB_USER', ''),
+            'USER': os.environ.get('DB_USER', 'postgres'),
             'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': '5432',
+            'HOST': os.environ.get('DB_HOST', 'localhost'), # Defaulting to localhost
+            'PORT': os.environ.get('DB_PORT', '5432'),
         }
     }
+
+# Optional: Add a check after the block to be sure DATABASES is set
+if 'default' not in DATABASES:
+    raise ImproperlyConfigured("Database configuration failed. DATABASES setting is empty.")
 
 
 # Password validation
