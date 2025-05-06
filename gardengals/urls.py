@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
 from blog.models import Post
+from django.views.generic.base import RedirectView
+from django.http import HttpResponse
 
 # Sitemap configuration - Define this BEFORE urlpatterns
 sitemaps = {
@@ -35,7 +37,9 @@ urlpatterns = [
     path('', include('core.urls')),
     path('blog/', include('blog.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('favicon.ico', lambda request: HttpResponse(status=204), name='favicon'),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
