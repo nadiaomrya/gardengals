@@ -1,6 +1,7 @@
 asgiref==3.8.1
 astroid==3.3.9
 dill==0.4.0
+dj-database-url==2.3.0
 Django==5.2
 django-appconf==1.1.0
 django-ckeditor==6.7.2

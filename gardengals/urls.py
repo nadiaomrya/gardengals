@@ -22,6 +22,14 @@ from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
 from blog.models import Post
 
+# Sitemap configuration - Define this BEFORE urlpatterns
+sitemaps = {
+    'blog': GenericSitemap({
+        'queryset': Post.objects.filter(is_published=True),
+        'date_field': 'published_at',
+    }, priority=0.6),
+}
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
@@ -31,11 +39,3 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# Sitemap configuration
-sitemaps = {
-    'blog': GenericSitemap({
-        'queryset': Post.objects.filter(is_published=True),
-        'date_field': 'published_at',
-    }, priority=0.6),
-}
