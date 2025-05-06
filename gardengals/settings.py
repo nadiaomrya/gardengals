@@ -29,8 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-fallback-key-for-development')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True' # Comment out the old line
-DEBUG = True # Temporarily set to True for diagnostics
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True' # Restore this line
 
 # Get the value of ALLOWED_HOSTS from the environment variable or use default values
 allowed_hosts = os.environ.get('ALLOWED_HOSTS', 'gardengalsofgeorgia.com,www.gardengalsofgeorgia.com')
