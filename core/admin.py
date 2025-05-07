@@ -6,7 +6,7 @@ from django.utils.html import format_html
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
-from .models import Service, Testimonial, AppointmentRequest, ReviewInvitation
+from .models import Service, Testimonial, Appointment, ReviewInvitation
 
 @admin.register(ReviewInvitation)
 class ReviewInvitationAdmin(admin.ModelAdmin):
@@ -84,3 +84,10 @@ class TestimonialAdmin(admin.ModelAdmin):
             return format_html('<a href="{}">{}</a>', link, obj.review_invitation)
         return "-"
     review_invitation_link.short_description = 'Review Invitation'
+
+@admin.register(Appointment)
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'phone', 'callback_time', 'created_at')
+    list_filter = ('callback_time', 'created_at')
+    search_fields = ('name', 'email', 'phone', 'address')
+    readonly_fields = ('created_at',)
