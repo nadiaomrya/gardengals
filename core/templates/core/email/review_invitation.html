@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>We'd Love Your Feedback</title>
+    <title>Share Your Experience with {{ site_name }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -47,23 +47,21 @@
             <h1>We'd Love Your Feedback</h1>
         </div>
         <div class="content">
-            <p>Dear {{ name }},</p>
+            <p>Hi {{ customer_name }},</p>
             
-            <p>Thank you for choosing Garden Gals of Georgia for your landscaping needs. We hope you're enjoying your garden!</p>
+            <p>Thank you for choosing {{ site_name }}! We value your feedback and would love for you to share your experience with us.</p>
             
-            <p>We'd love to hear about your experience with us. Your feedback helps us improve our services and lets other potential customers know what to expect.</p>
+            <p>Please take a moment to leave a review by clicking the link below:</p>
             
             <p style="text-align: center;">
-                <a href="{{ review_url }}" class="button">Leave a Review</a>
+                <a href="{{ review_url }}" class="button">Submit Your Review</a>
             </p>
             
-            <p>This link is unique to you and will expire in 30 days.</p>
+            <p>This link is unique to you and can only be used once.</p>
             
-            <p>Thank you for your time and support!</p>
+            <p>Thank you for your time!</p>
             
-            <p>Warm regards,<br>
-            Bailey Price<br>
-            Garden Gals of Georgia</p>
+            <p>Sincerely,<br>The {{ site_name }} Team</p>
         </div>
         <div class="footer">
             <p>© {% now "Y" %} Garden Gals of Georgia. All rights reserved.</p>
