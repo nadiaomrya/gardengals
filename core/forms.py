@@ -12,8 +12,13 @@ class AppointmentForm(forms.ModelForm):
 class TestimonialForm(forms.ModelForm):
     class Meta:
         model = Testimonial
-        fields = ['rating', 'text']
+        fields = ['first_name', 'rating', 'quote']
         widgets = {
-            'rating': forms.Select(choices=[(i, i) for i in range(1, 6)]),
-            'text': forms.Textarea(attrs={'rows': 5, 'placeholder': 'Tell us about your experience with Garden Gals...'}),
+            'quote': forms.Textarea(attrs={'rows': 5, 'placeholder': 'Share your experience...'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'Your first name'}),
+        }
+        labels = {
+            'first_name': 'Your First Name',
+            'rating': 'Your Rating (1-5 stars)',
+            'quote': 'Your Review',
         } 
