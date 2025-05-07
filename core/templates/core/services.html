@@ -1,46 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}OUR SERVICES - GARDEN GALS OF GEORGIA{% endblock %}
+{% block title %}Our Services - Garden Gals{% endblock %}
 
 {% block content %}
-<section class="py-5">
+<section class="services-page py-5">
     <div class="container">
+        <h1 class="text-center mb-5">Our Expert Gardening Services</h1>
+        
+        {% comment %} Original services loop removed. You can add new content here. {% endcomment %}
         <div class="row">
-            <div class="col-lg-8 mx-auto text-center">
-                <h1 class="mb-4">OUR SERVICES</h1>
-                <p class="lead">Professional gardening services tailored to your needs.</p>
+            <div class="col-12">
+                <p class="text-center">Information about our services will be available here soon. Please contact us for more details.</p>
+                {# Or simply leave this section empty if you don't want any placeholder text #}
             </div>
         </div>
-    </div>
-</section>
 
-<section class="py-5">
-    <div class="container">
-        {% for service in services %}
-        <div class="row mb-5 {% if forloop.counter|divisibleby:2 %}flex-row-reverse{% endif %} align-items-center">
-            <div class="col-md-6">
-                <h2>{{ service.name }}</h2>
-                <p>{{ service.description }}</p>
-                <a href="{% url 'appointment' %}?service={{ service.id }}" class="btn btn-success">Book This Service</a>
-            </div>
-            <div class="col-md-6">
-                <img src="https://via.placeholder.com/600x400" alt="{{ service.name }}" class="img-fluid rounded">
-            </div>
-        </div>
-        {% if not forloop.last %}<hr class="my-5">{% endif %}
-        {% empty %}
-        <div class="text-center">
-            <p>Our services will be listed here soon.</p>
-        </div>
-        {% endfor %}
-    </div>
-</section>
-
-<section class="bg-light py-5">
-    <div class="container text-center">
-        <h2 class="mb-4">Ready to transform your garden?</h2>
-        <p class="lead mb-4">Contact us today to schedule a consultation.</p>
-        <a href="{% url 'appointment' %}" class="btn btn-lg btn-success">Book a Call</a>
     </div>
 </section>
 {% endblock %} 
