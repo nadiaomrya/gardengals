@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib import messages
 from .models import Service, Testimonial, ReviewInvitation
 from .forms import AppointmentForm, TestimonialForm
+from django.utils import timezone
 
 def landing(request):
     services = Service.objects.all()[:3]
@@ -78,7 +79,8 @@ def privacy(request):
 def add_testimonial(request, token):
     invitation = get_object_or_404(ReviewInvitation, token=token)
     
-    if not invitation.is_valid:
+    # Check if invitation is valid (not used)
+    if invitation.is_used:
         messages.error(request, "This invitation link has expired or already been used.")
         return redirect('landing')
     
@@ -86,18 +88,20 @@ def add_testimonial(request, token):
         form = TestimonialForm(request.POST)
         if form.is_valid():
             testimonial = form.save(commit=False)
-            testimonial.name = invitation.name
+            testimonial.first_name = invitation.customer_name or invitation.customer_email
+            testimonial.review_invitation = invitation
             testimonial.save()
             
             # Mark invitation as used
-            invitation.used = True
+            invitation.is_used = True
+            invitation.used_at = timezone.now()
             invitation.save()
             
             messages.success(request, "Thank you for your review! It will be displayed on our site after approval.")
             return redirect('landing')
     else:
         # Pre-fill the name from the invitation
-        form = TestimonialForm(initial={'name': invitation.name})
+        form = TestimonialForm(initial={'first_name': invitation.customer_name or invitation.customer_email})
     
     return render(request, 'core/add_testimonial.html', {
         'form': form,
