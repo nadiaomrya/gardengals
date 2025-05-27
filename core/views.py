@@ -25,7 +25,7 @@ def services(request):
     return render(request, 'core/services.html', {'services': services})
 
 def testimonials(request):
-    testimonials = Testimonial.objects.filter(approved=True).order_by('-date')
+    testimonials = Testimonial.objects.filter(is_approved=True).order_by('-created_at')
     return render(request, 'core/testimonials.html', {'testimonials': testimonials})
 
 def appointment(request):
