@@ -7,6 +7,7 @@ urlpatterns = [
     path('services/', views.services, name='services'),
     path('testimonials/', views.testimonials, name='testimonials'),
     path('appointment/', views.appointment, name='appointment'),
+    path('appointment/success/', views.appointment_success, name='appointment_success'),
     path('privacy/', views.privacy, name='privacy'),
     path('testimonials/add/<uuid:token>/', views.add_testimonial, name='add_testimonial'),
 ] 

@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 from django.contrib import messages
-from .models import Service, Testimonial, ReviewInvitation
+from .models import Service, Testimonial, ReviewInvitation, Appointment
 from .forms import AppointmentForm, TestimonialForm
 from django.utils import timezone
 
@@ -41,37 +41,63 @@ def appointment(request):
             })
             plain_message = strip_tags(html_message)
             
-            # Send to the business owner
-            send_mail(
-                subject,
-                plain_message,
-                settings.DEFAULT_FROM_EMAIL,
-                ['bailey@gardengalsofgeorgia.com'],  # Owner's email
-                html_message=html_message,
-                fail_silently=False,
-            )
+            # Send to the business owner (with error handling)
+            try:
+                send_mail(
+                    subject,
+                    plain_message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    ['bailey@gardengalsofgeorgia.com'],  # Owner's email
+                    html_message=html_message,
+                    fail_silently=True,  # Don't fail if email doesn't work
+                )
+            except Exception as e:
+                # Log the error but don't break the form submission
+                print(f"Failed to send notification email: {e}")
             
-            # Send confirmation to the customer
-            customer_subject = 'Your Callback Request - Garden Gals of Georgia'
-            customer_html = render_to_string('core/email/callback_confirmation.html', {
-                'appointment': appointment,
-            })
-            customer_plain = strip_tags(customer_html)
+            # Send confirmation to the customer (with error handling)
+            try:
+                customer_subject = 'Your Callback Request - Garden Gals of Georgia'
+                customer_html = render_to_string('core/email/callback_confirmation.html', {
+                    'appointment': appointment,
+                })
+                customer_plain = strip_tags(customer_html)
+                
+                send_mail(
+                    customer_subject,
+                    customer_plain,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [appointment.email],  # Customer's email
+                    html_message=customer_html,
+                    fail_silently=True,  # Don't fail if email doesn't work
+                )
+            except Exception as e:
+                # Log the error but don't break the form submission
+                print(f"Failed to send confirmation email: {e}")
             
-            send_mail(
-                customer_subject,
-                customer_plain,
-                settings.DEFAULT_FROM_EMAIL,
-                [appointment.email],  # Customer's email
-                html_message=customer_html,
-                fail_silently=False,
-            )
+            # Store appointment ID in session for success page
+            request.session['last_appointment_id'] = appointment.id
             
             return redirect('appointment_success')
     else:
         form = AppointmentForm()
     
     return render(request, 'core/appointment.html', {'form': form})
+
+def appointment_success(request):
+    appointment_id = request.session.get('last_appointment_id')
+    if appointment_id:
+        try:
+            appointment = Appointment.objects.get(id=appointment_id)
+            # Clear the session data
+            if 'last_appointment_id' in request.session:
+                del request.session['last_appointment_id']
+            return render(request, 'core/appointment_success.html', {'appointment': appointment})
+        except Appointment.DoesNotExist:
+            pass
+    
+    # Fallback if no appointment found
+    return render(request, 'core/appointment_success.html', {'appointment': None})
 
 def privacy(request):
     return render(request, 'core/privacy.html')
