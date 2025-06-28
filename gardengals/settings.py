@@ -180,6 +180,19 @@ EMAIL_HOST_USER = 'info@gardengalsofgeorgia.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 DEFAULT_FROM_EMAIL = 'Garden Gals of Georgia <info@gardengalsofgeorgia.com>'
 
+# Debug email configuration
+print(f"Email Configuration Debug:")
+print(f"EMAIL_BACKEND: {EMAIL_BACKEND}")
+print(f"EMAIL_HOST: {EMAIL_HOST}")
+print(f"EMAIL_PORT: {EMAIL_PORT}")
+print(f"EMAIL_USE_TLS: {EMAIL_USE_TLS}")
+print(f"EMAIL_HOST_USER: {EMAIL_HOST_USER}")
+print(f"EMAIL_HOST_PASSWORD: {'SET' if EMAIL_HOST_PASSWORD else 'NOT SET'}")
+print(f"DEFAULT_FROM_EMAIL: {DEFAULT_FROM_EMAIL}")
+
+# Alternative: Use console backend for debugging (uncomment to test)
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Security settings
 SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
 SESSION_COOKIE_SECURE = True  # Cookies only sent over HTTPS

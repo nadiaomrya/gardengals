@@ -41,8 +41,17 @@ def appointment(request):
             })
             plain_message = strip_tags(html_message)
             
+            # Debug: Check email configuration
+            print(f"Email configuration check:")
+            print(f"EMAIL_HOST: {settings.EMAIL_HOST}")
+            print(f"EMAIL_PORT: {settings.EMAIL_PORT}")
+            print(f"EMAIL_HOST_USER: {settings.EMAIL_HOST_USER}")
+            print(f"EMAIL_HOST_PASSWORD: {'SET' if settings.EMAIL_HOST_PASSWORD else 'NOT SET'}")
+            print(f"DEFAULT_FROM_EMAIL: {settings.DEFAULT_FROM_EMAIL}")
+            
             # Send to the business owner (with error handling)
             try:
+                print(f"Attempting to send notification email to bailey@gardengalsofgeorgia.com")
                 send_mail(
                     subject,
                     plain_message,
@@ -51,9 +60,11 @@ def appointment(request):
                     html_message=html_message,
                     fail_silently=True,  # Don't fail if email doesn't work
                 )
+                print(f"Notification email sent successfully")
             except Exception as e:
                 # Log the error but don't break the form submission
                 print(f"Failed to send notification email: {e}")
+                print(f"Error type: {type(e).__name__}")
             
             # Send confirmation to the customer (with error handling)
             try:
@@ -63,6 +74,7 @@ def appointment(request):
                 })
                 customer_plain = strip_tags(customer_html)
                 
+                print(f"Attempting to send confirmation email to {appointment.email}")
                 send_mail(
                     customer_subject,
                     customer_plain,
@@ -71,9 +83,11 @@ def appointment(request):
                     html_message=customer_html,
                     fail_silently=True,  # Don't fail if email doesn't work
                 )
+                print(f"Confirmation email sent successfully")
             except Exception as e:
                 # Log the error but don't break the form submission
                 print(f"Failed to send confirmation email: {e}")
+                print(f"Error type: {type(e).__name__}")
             
             # Store appointment ID in session for success page
             request.session['last_appointment_id'] = appointment.id
